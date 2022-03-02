@@ -25,10 +25,20 @@ MongoClient.connect('mongodb+srv://sameer:primesam1s@cluster0.8dfo7.mongodb.net/
 
     const db = client.db('To-Do-List');
     const quotesCollection = db.collection('quotes')
+
+    app.set('view engine', 'ejs')
+
     app.use(bodyParser.urlencoded({ extended: true }));
 
     app.get("/", function (req, res) {
-        res.sendFile(__dirname + '/index.html');
+        const cursor = db.collection('quotes').find().toArray()
+            .then(results => {
+                res.render('index.ejs', {quotes: results})
+                console.log(results);
+            })
+            .catch(error => console.error(error))
+        console.log(cursor);
+        //res.sendFile(__dirname + '/index.html');
     });
 
     app.post('/quotes', (req, res) => {
