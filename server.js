@@ -3,12 +3,12 @@ const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.get("/", function (req, res) {
-    res.sendFile(__dirname + '/index.html');
-});
+// app.get("/", function (req, res) {
+//     res.sendFile(__dirname + '/index.html');
+// });
 
 // app.post('/quotes', (req, res) => {
 //     quotesCollection.insertOne(req.body)
@@ -25,15 +25,20 @@ MongoClient.connect('mongodb+srv://sameer:primesam1s@cluster0.8dfo7.mongodb.net/
 
     const db = client.db('To-Do-List');
     const quotesCollection = db.collection('quotes')
-    app.use( /* ... */);
-    app.get( /* ... */);
+    app.use(bodyParser.urlencoded({ extended: true }));
+
+    app.get("/", function (req, res) {
+        res.sendFile(__dirname + '/index.html');
+    });
+
     app.post('/quotes', (req, res) => {
         quotesCollection.insertOne(req.body)
           .then(result => {
-            console.log(result)
+            res.redirect('/')
           })
           .catch(error => console.error(error))
       })
+
     app.listen( /* ... */);
     })
     .catch(console.error);
