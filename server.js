@@ -29,6 +29,8 @@ MongoClient.connect('mongodb+srv://sameer:primesam1s@cluster0.8dfo7.mongodb.net/
     app.set('view engine', 'ejs')
 
     app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(express.static('public'))
+    app.use(bodyParser.json())
 
     app.get("/", function (req, res) {
         const cursor = db.collection('quotes').find().toArray()
@@ -57,3 +59,7 @@ MongoClient.connect('mongodb+srv://sameer:primesam1s@cluster0.8dfo7.mongodb.net/
 app.listen(3000, function () {
     console.log('listening on 3000');
 });
+
+app.put('/quotes', (req, res) => {
+    console.log(req.body)
+  })
